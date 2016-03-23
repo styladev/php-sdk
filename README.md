@@ -1,7 +1,7 @@
 
 # INTRODUCTION
 
-This is an example implementation for fetching SEO content for a Styla magazine using PHP. It’s fetching SEO content from the Styla SEO API according to the current site (root magazine, story, category, etc.) injects it into the page and caches it for future use.
+This is an example implementation for fetching SEO content for a Styla magazine using PHP. It’s based on the [Styla Plugin Documentation](http://static.styla.com/docs/pluginDocumentation.pdf) and fetches SEO content from the Styla SEO API according to the current site/content (root magazine, story, category, etc.), injects it into the page and caches it for future use.
 
 ## GET IT RUNNING
 
