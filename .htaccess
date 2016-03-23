@@ -1,0 +1,9 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^(user|tag|story|search)/(.*)$ %{REQUEST_SCHEME}://%{HTTP_HOST}/?origUrl=$0 [E=ORIG_URI:/$0,P,L,QSA]
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . {rootpath}/index.php [L]
+</IfModule>
