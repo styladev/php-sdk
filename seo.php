@@ -9,8 +9,8 @@
  *
  * @author     Christian Korndoerfer
  * @copyright  2016 Styla GmbH
- * @version    1.0.0
- * @link       http://github.com/styladev/phpintegration
+ * @version    1.0.1
+ * @link       https://github.com/styladev/php-sdk
  * @since      File available since Release 1.0.0
  */
 
@@ -45,12 +45,13 @@ function fetchFromSeoApi($key, $url){
             	if(substr((string)$SEO_json->status, 0, 1) == '2'){
 
                 	// extract caching duration and SEO information from JSON
-                	$expire = isset($SEO_json->expire) ? $SEO_json->expire / 60 : 60; // in s
-                    $SEO_head = isset($SEO_json->html->head) ? $SEO_json->html->head : "";
-                    $SEO_body = isset($SEO_json->html->body) ? $SEO_json->html->body : "";
+                	$data["expire"] = isset($SEO_json->expire) ? $SEO_json->expire / 60 : 60; // in s
+                    $data["head"] = isset($SEO_json->html->head) ? $SEO_json->html->head : "";
+                    $data["body"] = isset($SEO_json->html->body) ? $SEO_json->html->body : "";
+                    $data["key"] = $key;
 
-                    // Save $SEO_head, $SEO_body and $expire to cache
-        			writeToCache($key, $SEO_head, $SEO_body, $expire);
+                    // Save SEO head, body and expire data to cache
+        			writeToCache($data);
 
                     // return JSON to use it in index.php
                     return $SEO_json;

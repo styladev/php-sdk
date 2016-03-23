@@ -6,8 +6,8 @@
      *
      * @author     Christian Korndoerfer
      * @copyright  2016 Styla GmbH
-     * @version    1.0.0
-     * @link       http://github.com/styladev/phpintegration
+     * @version    1.0.1
+     * @link       https://github.com/styladev/php-sdk
      * @since      File available since Release 1.0.0
      */
 
@@ -21,7 +21,7 @@
 <head>
     <meta charset="UTF-8">
     <!-- SEO content generated in seo.php -->
-    <?php echo $SEO_head ?>
+    <?php echo stripslashes($SEO_head) ?>
 
     <!-- Styla Magazine script and styles generated in magazine.php -->
     <?php require('magazine.php') ?>
@@ -40,14 +40,15 @@
                 <strong>Script Server:</strong> <?php echo $config["CDN_server"] ?> <br>
                 <strong>SEO server:</strong> <?php echo $config["SEO_server"] ?> <br>
                 <strong>Current SEO API request:</strong> <?php echo $config["SEO_server"].$config['domain']."?url=".$key ?> <br>
-                <strong>Reading from cache:</strong> <?php echo $debug_cache ?>
+                <strong>Reading SEO from cache:</strong> <?php echo $debug_cache ?> <br>
+                <strong>Reading Version from cache:</strong> <?php echo $debug_version_cache." (".$version.")" ?>
             </p>
         </div>
     </div>
     <div class="container">
         <!-- This is where the magazine will be displayed -->
         <div id="stylaMagazine"></div>
-        <?php echo $SEO_body ?>
+        <?php echo stripslashes($SEO_body) ?>
     </div>
 </body>
 </html>

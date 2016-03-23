@@ -8,7 +8,7 @@
  * @author     Christian Korndoerfer
  * @copyright  2016 Styla GmbH
  * @version    1.0.0
- * @link       http://github.com/styladev/phpintegration
+ * @link       https://github.com/styladev/php-sdk
  * @since      File available since Release 1.0.0
  */
 
