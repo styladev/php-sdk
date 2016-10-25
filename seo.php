@@ -19,9 +19,18 @@ if($config['rootpath'] == "/"){
     $key = array_key_exists("origUrl", $_REQUEST) ? $_REQUEST["origUrl"] : "/";
 }
 else{
+    // Extract path and query information from current URL
     $url = parse_url($_SERVER['REQUEST_URI']);
     $path = $url['path'];
+    $query = isset($url['query']) ? $url['query'] : "";
+
+    // search for rootpath in $path and remove it
     $key = str_replace("/".$config['rootpath'], "", $path);
+
+    // Append ?offset parameter if set
+    if (strpos($query, 'offset=') !== false) {
+        $key .= '?'.$query;
+    }
 }
 
 // escapes the key string
@@ -43,7 +52,6 @@ function fetchFromSeoApi($key, $url){
         	if(isset($SEO_json->status)){
                 // check if response code is 2XX
             	if(substr((string)$SEO_json->status, 0, 1) == '2'){
-
                 	// extract caching duration and SEO information from JSON
                 	$data["expire"] = isset($SEO_json->expire) ? $SEO_json->expire / 60 : 60; // in s
                     $data["head"] = isset($SEO_json->html->head) ? $SEO_json->html->head : "";
@@ -55,7 +63,10 @@ function fetchFromSeoApi($key, $url){
 
                     // return JSON to use it in index.php
                     return $SEO_json;
-            	}
+            	} else {
+                    // non existent pages/sites should return 404
+                    header("HTTP/1.0 404 Not Found");
+                }
             }
         }
     }
@@ -70,10 +81,10 @@ if(!is_file('cache/path_'.$escapedKey.'.php')){
     $SEO_json = fetchFromSeoApi($key, $url);
 
     // Set SEO <head> information for index.php
-    $SEO_head = $SEO_json->html->head;
+    $SEO_head = isset($SEO_json->html->head) ? $SEO_json->html->head : "";
 
     // set SEO <body> information for index.php
-    $SEO_body = $SEO_json->html->body;
+    $SEO_body = isset($SEO_json->html->body) ? $SEO_json->html->body : "";
 }
 else{
     $debug_cache = "true";

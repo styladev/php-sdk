@@ -5,13 +5,17 @@ This is an example implementation for fetching SEO content for a Styla magazine 
 
 ## GET IT RUNNING
 
-In order to run the example locally on your machine you need a local server that supports PHP. To get a server like this you can utilize common software like e.g. [MAMP](https://www.mamp.info/en/downloads/) which will serve as a reference for this guide.
+#### Option A
 
-Download this repository as [a zip file](https://github.com/styladev/php-sdk/archive/master.zip) or clone and extract it. Once MAMP is installed and running, place all extracted files in the “htdocs” directory. Alternatively you can change the path to the extracted `index.php` within the MAMP settings.
+Clone this repository or download and extract it as [a zip file](https://github.com/styladev/php-sdk/archive/master.zip). Open a terminal window and change directory to the cloned directory containing the `index.php` file. Run `php -S localhost:8000` to ramp up a local PHP server. You should now be able to navigate to http://localhost:8000/ in your browser.
+
+#### Option B
+
+Another way to get a server like this running you can utilize common software like e.g. [MAMP](https://www.mamp.info/en/downloads/) which will serve as a reference for this guide. Once MAMP is installed and running, place all extracted files in the “htdocs” directory. Alternatively you can change the path to the extracted `index.php` within the MAMP settings.
 
 ---
 
-As an example for this README we are going to use "Kiveda" as an client:
+As an example for this README we are going to use "Kiveda" as an client and use MAMP for our local server:
 
 * If your magazine is using a specific rootpath (e.g. /magazin is the rootpath for Kiveda) create new folder within htdocs named after that rootpath and place all files except the .htaccess in there:
 
