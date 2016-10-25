@@ -64,7 +64,7 @@ function fetchFromSeoApi($key, $url){
                     // return JSON to use it in index.php
                     return $SEO_json;
             	} else {
-                    // non existent pages/sites shoudl return 404
+                    // non existent pages/sites should return 404
                     header("HTTP/1.0 404 Not Found");
                 }
             }
