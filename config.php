@@ -13,8 +13,8 @@
  */
 
 $config = [
-    "domain" => "boohoo-uk",     // your domain name, e.g. "kiveda"
-    "rootpath" => "uk",     // your magazines rootpath,
+    "domain" => "{domainname}",     // your domain name, e.g. "kiveda"
+    "rootpath" => "{rootpath}",     // your magazines rootpath,
                                     // e.g. for yourdomain.com/magazine the rootpath would be "magazine"
 
     // Don't modify below this line unless you know what you're doing
