@@ -22,15 +22,9 @@ else{
     // Extract path and query information from current URL
     $url = parse_url($_SERVER['REQUEST_URI']);
     $path = $url['path'];
-    $query = isset($url['query']) ? $url['query'] : "";
 
     // search for rootpath in $path and remove it
     $key = str_replace("/".$config['rootpath'], "", $path);
-
-    // Append ?offset parameter if set
-    if (strpos($query, 'offset=') !== false) {
-        $key .= '?'.$query;
-    }
 }
 
 // escapes the key string
@@ -72,9 +66,28 @@ function fetchFromSeoApi($key, $url){
     }
 }
 
+// Extract 'offset' param from given URL object
+function getOffsetParam(){
+     $url = parse_url($_SERVER['REQUEST_URI']);
+     $query = isset($url['query']) ? $url['query'] : "";
+
+     if(strpos($query, 'offset=') !== false) {
+         $offset =  $query;
+     }
+     else {
+         $offset =  '';
+     }
+
+     return $offset;
+}
+
 // Check if $key is already in the cache
 if(!is_file('cache/path_'.$escapedKey.'.php')){
     $debug_cache = "false";
+
+    // get offset of current URL
+    $offset = getOffsetParam();
+    $key .= !empty($offset) ? "?".$offset : "";
 
     // build URL to fetch data from
     $url = $config['SEO_server'].$config['domain']."?url=".$key;
