@@ -14,6 +14,8 @@
     require_once('config.php');     // general configuration
     require_once('caching.php');    // provides caching functions
     require_once('seo.php');        // fetches SEO content and utilizes caching
+
+    header('Content-Type: text/html; charset=UTF-8'); // Force setting the charset to UTF-8
 ?>
 
 <!DOCTYPE html>
