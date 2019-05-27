@@ -1,23 +1,21 @@
 <?php
-    include("styla.php");
+include("styla.php");
 
-    $styla = new Styla('showcase', [
-        "rootpath" => "/"
-    ]);
+$styla = new Styla('showcase', [
+    "content" => "modules"
+]);
 
-    header('Content-Type: text/html; charset=UTF-8');
+header('Content-Type: text/html; charset=UTF-8');
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- SEO content generated in seo.php -->
     <?=$styla->getSEOHead() ?>
-
-    <!-- Styla Magazine script and styles generated in magazine.php -->
-    <?=$styla->getMagazineMetaTags() ?>
+    <?=$styla->getLPMetaTags() ?>
 
     <style>
         @font-face{font-family:NeueHaasUnicaPro;font-weight:700;src:url(https://static-cdn.styla.com/styla/fonts/neuehaas/unicaprobold.eot);src:url(https://static-cdn.styla.com/styla/fonts/neuehaas/unicaprobold.eot?#iefix) format("embedded-opentype"),url(https://static-cdn.styla.com/styla/fonts/neuehaas/unicaprobold.woff2) format("woff2"),url(https://static-cdn.styla.com/styla/fonts/neuehaas/unicaprobold.woff) format("woff"),url(https://static-cdn.styla.com/styla/fonts/neuehaas/unicaprobold.ttf) format("truetype"),url(https://static-cdn.styla.com/styla/fonts/neuehaas/unicaprobold.svg#wf) format("svg")}
@@ -77,35 +75,34 @@
             <div>
                 <table style="width: 100%;">
                     <tbody>
-                        <tr>
-                            <th>Client name</th>
-                            <td><?=$styla->clientName ?></td>
-                        </tr>
-                        <tr>
-                            <th>Rootpath</th>
-                            <td><?=$styla->rootPath ?></td>
-                        </tr>
-                        <tr>
-                            <th>Content Key</th>
-                            <td><?=$styla->contentKey ?></td>
-                        </tr>
-                        <tr>
-                            <th>CDN Server</th>
-                            <td><?=$styla::$cdnPrefix ?></td>
-                        </tr>
-                        <tr>
-                            <th>SEO Server</th>
-                            <td><?=$styla::$seoPrefix ?></td>
-                        </tr>
+                    <tr>
+                        <th>Client name</th>
+                        <td><?=$styla->clientName ?></td>
+                    </tr>
+                    <tr>
+                        <th>Rootpath</th>
+                        <td><?=$styla->rootPath ?></td>
+                    </tr>
+                    <tr>
+                        <th>Content Key</th>
+                        <td><?=$styla->contentKey ?></td>
+                    </tr>
+                    <tr>
+                        <th>CDN Server</th>
+                        <td><?=$styla::$cdnPrefix ?></td>
+                    </tr>
+                    <tr>
+                        <th>SEO Server</th>
+                        <td><?=$styla::$seoPrefix ?></td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
     <div class="container">
-        <!-- This is where the magazine will be displayed -->
-        <?=$styla->getMagazineTag() ?>
-        <?=$styla->getSEOBody() ?>
+        <!-- This is where the landing page will be displayed -->
+        <?=$styla->getLPTagWithSeo() ?>
     </div>
 </body>
 </html>

@@ -14,13 +14,18 @@
         public $rootPath = null;
 
         private $seo = null;
+        private $contentId = null;
+        private $slotId = null;
 
         public function __construct(
             $clientName,
-            $rootPath = "/"
+            $params = []
         ) {
             $this->clientName = $clientName;
-            $this->rootPath = $rootPath;
+            $this->contentId = $params["content"] ? $params["content"] : null;
+            $this->slotId = $params["slot"] ? $params[""] : null;
+
+            $this->rootPath = $params["rootPath"] ? $params["rootPath"] : null;
 
             $this->init();
         }
@@ -68,12 +73,38 @@
         }
 
         public function getLPTag($params = []) {
-            return join([
+            $client = $this->clientName;
+            $content = $this->contentId;
+            $slot = $this->slotId;
+
+            if ( $params["client"] ) {
+                $client = $params["client"];
+            }
+
+            if ( $params["content"] ) {
+                $content = $params["content"];
+            }
+
+            if ( $params["slot"] ) {
+                $slot = $params["slot"];
+            }
+
+            return join(' ', [
                 "<div",
-                $params["client"] ? "data-styla-client=\"" . $params["client"] . "\"" : "",
-                $params["slot"] ? "data-styla-slot=\"" . $params["slot"] . "\"" : "",
-                $params["content"] ? "data-styla-content=\"" . $params["content"] . "\"" : "",
-                "></div>"
+                $client ? "data-styla-client=\"" . $client . "\"" : "",
+                $content ? "data-styla-content=\"" . $content . "\"" : "",
+                $slot ? "data-styla-slot=\"" . $slot . "\"" : "",
+                $params["noClosedTag"] ? ">" : "></div>"
+            ]);
+        }
+
+        public function getLPTagWithSeo($params = []) {
+            $params["noClosedTag"] = true;
+
+            return join([
+                $this->getLPTag($params),
+                $this->getSEOBody(),
+                "</div>"
             ]);
         }
 
@@ -88,7 +119,7 @@
                 return '';
             }
 
-            return stripslashes($this->seo->html->head);
+            return $this->seo->html->head;
         }
 
         public function getSEOBody() {
@@ -102,7 +133,7 @@
                 return '';
             }
 
-            return stripslashes($this->seo->html->body);
+            return $this->seo->html->body;
         }
 
         public function getSEOContent() {
@@ -110,15 +141,23 @@
                 return $this->seo;
             }
 
+            $resolvedContentKey = $this->contentKey;
+
+            if ( $this->contentId !== null ) {
+                $resolvedContentKey = $this->contentId;
+            }
+
             // build URL to fetch data from
             $url = join([
                 self::$seoPrefix,
                 $this->clientName,
                 "?url=",
-                $this->contentKey
+                $resolvedContentKey
             ]);
 
-            return $this->fetchSEOContent($url);
+            $this->seo = $this->fetchSEOContent($url);
+
+            return $this->seo;
         }
 
         private function fetchSEOContent($url) {
@@ -147,8 +186,6 @@
             if($seoResponse->status !== 200) {
                 return;
             }
-
-            $this->seo = $seoResponse;
 
             return $seoResponse;
         }
@@ -189,4 +226,3 @@
             $this->buildContentKey();
         }
     }
-?>
