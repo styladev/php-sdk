@@ -17,6 +17,8 @@
         private $contentId = null;
         private $slotId = null;
 
+        private $useCurl = false;
+
         public function __construct(
             $clientName,
             $params = []
@@ -26,6 +28,8 @@
             $this->slotId = $params["slot"] ? $params[""] : null;
 
             $this->rootPath = $params["rootPath"] ? $params["rootPath"] : null;
+
+            $this->useCurl = in_array('curl', get_loaded_extensions());
 
             $this->init();
         }
@@ -162,7 +166,7 @@
 
         private function fetchSEOContent($url) {
             // If not in cache yet -> fetch SEO information for current content
-            $rawSeoResponse = file_get_contents($url);
+            $rawSeoResponse = $this->fetchResource($url);
 
             // Check the SEO API response
             if(!$rawSeoResponse) {
@@ -188,6 +192,25 @@
             }
 
             return $seoResponse;
+        }
+
+        private function fetchResource($url) {
+            if (!$this->useCurl) {
+                return file_get_contents($url);
+            }
+
+            $req = curl_init();
+
+            curl_setopt($req, CURLOPT_HEADER, false);
+            curl_setopt($req, CURLOPT_FOLLOWLOCATION, true);
+            curl_setopt($req, CURLOPT_URL, $url);
+            curl_setopt($req, CURLOPT_RETURNTRANSFER, true);
+
+            $res = curl_exec($req);
+
+            curl_close($req);
+
+            return $res;
         }
 
         // Extract 'offset' param from given URL object
