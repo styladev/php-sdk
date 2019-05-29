@@ -18,6 +18,7 @@
         private $slotId = null;
 
         private $useCurl = false;
+        private $forceRootPath = false;
 
         public function __construct(
             $clientName,
@@ -30,6 +31,7 @@
             $this->rootPath = $params["rootPath"] ? $params["rootPath"] : null;
 
             $this->useCurl = in_array('curl', get_loaded_extensions());
+            $this->forceRootPath = $params["forceRootPath"] ? $params["forceRootPath"] : false;
 
             $this->init();
         }
@@ -147,15 +149,26 @@
 
             $resolvedContentKey = $this->contentKey;
 
-            if ( $this->contentId !== null ) {
+            $isLP = $this->contentId !== null;
+
+            if ( $isLP ) {
                 $resolvedContentKey = $this->contentId;
+            }
+
+            if ( $this->forceRootPath && isset($this->rootPath) ) {
+                $resolvedContentKey = join([
+                    $this->contentKey,
+                    $resolvedContentKey
+                ]);
             }
 
             // build URL to fetch data from
             $url = join([
                 self::$seoPrefix,
                 $this->clientName,
-                "?url=",
+                "?",
+                $isLP ? "type=area&" : "",
+                "url=",
                 $resolvedContentKey
             ]);
 
@@ -226,6 +239,11 @@
         }
 
         private function buildContentKey() {
+            if ( $this->forceRootPath && isset($this->rootPath) ) {
+                $this->contentKey = $this->rootPath;
+                return;
+            }
+
             $url = parse_url($_SERVER['REQUEST_URI']);
             $currPath = $url['path'];
 
