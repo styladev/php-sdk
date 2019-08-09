@@ -68,7 +68,7 @@
         public function getLPMetaTags() {
             return join([
                 "<link rel=\"preconnect\" href=\"https://engine.styla.com\">",
-                "<script src=\"", self::$prophetUrl, "\"></script>"
+                "<script src=\"", self::$prophetUrl, "\" async></script>"
             ]);
         }
 
