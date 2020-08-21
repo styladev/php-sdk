@@ -105,7 +105,6 @@
     <div class="container">
         <!-- This is where the magazine will be displayed -->
         <?=$styla->getMagazineTag() ?>
-        <?=$styla->getSEOBody() ?>
     </div>
 </body>
 </html>

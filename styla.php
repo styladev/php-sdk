@@ -74,7 +74,9 @@
 
         public function getMagazineTag() {
             return join([
-                "<div id=\"stylaMagazine\"></div>"
+                "<div id=\"stylaMagazine\">",
+                $this->getSEOBody(),
+                "</div>"
             ]);
         }
 
