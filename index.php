@@ -2,7 +2,7 @@
     include("styla.php");
 
     $styla = new Styla('showcase', [
-        "rootpath" => "/"
+        "rootPath" => "/"
     ]);
 
     header('Content-Type: text/html; charset=UTF-8');
