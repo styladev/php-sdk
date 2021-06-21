@@ -252,9 +252,9 @@
             $contentKey = isset($_REQUEST["origUrl"]) ? $_REQUEST["origUrl"] : "/";
 
             if($this->rootPath !== "/"){
-                $path = join([ "/", $this->rootPath ]);
+                $path = $this->rootPath[0] !== "/" ? "/".$this->rootPath : $this->rootPath;
 
-                // search for rootpath in $path and remove it
+                // search for rootPath in $path and remove it
                 $contentKey = str_replace($path, "", $currPath);
             }
 
